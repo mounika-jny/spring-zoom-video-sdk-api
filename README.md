@@ -31,5 +31,5 @@ This project provides a Spring Boot REST API that integrates with the Zoom Video
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-org/spring-zoom-videosdk-api.git
+git clone https://github.com/mounika-jny/spring-zoom-video-sdk-api.git
 cd spring-zoom-videosdk-api
