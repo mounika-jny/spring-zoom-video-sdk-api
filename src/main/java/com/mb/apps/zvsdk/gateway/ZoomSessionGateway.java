@@ -69,4 +69,8 @@ public class ZoomSessionGateway {
     }
 
 
+    public SessionParticipantsResponse fetchParticipantsInformation(String sessionId) {
+        return exchange(HttpMethod.GET, "/videosdk/sessions/" + sessionId+"/users", null, SessionParticipantsResponse.class);
+
+    }
 }

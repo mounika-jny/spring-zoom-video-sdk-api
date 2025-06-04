@@ -45,4 +45,11 @@ public class ZoomSessionController {
         sessionService.deleteSession(sessionId);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/{sessionId}/participants-info")
+    public ResponseEntity<SessionParticipantsResponse> getParticipantsInfo(@PathVariable String sessionId) {
+        return ResponseEntity.ok(sessionService.fetchParticpiantsInformation(sessionId));
+    }
+
 }

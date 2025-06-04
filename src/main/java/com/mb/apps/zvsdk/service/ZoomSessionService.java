@@ -34,4 +34,8 @@ public class ZoomSessionService {
     public void deleteSession(String sessionId) {
         gateway.deleteSession(sessionId);
     }
+
+    public SessionParticipantsResponse fetchParticpiantsInformation(String sessionId) {
+        return gateway.fetchParticipantsInformation(sessionId);
+    }
 }
