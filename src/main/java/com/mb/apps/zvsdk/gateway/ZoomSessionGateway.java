@@ -1,6 +1,7 @@
 package com.mb.apps.zvsdk.gateway;
 
 import com.mb.apps.zvsdk.dto.*;
+import com.mb.apps.zvsdk.util.ZoomTokenUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,16 +19,12 @@ public class ZoomSessionGateway {
     @Value("${zoom.api.base-url}")
     private String baseUrl;
 
-    @Value("${zoom.api.key}")
-    private String key;
-
-    @Value("${zoom.api.secret}")
-    private String secret;
-
+    private final ZoomTokenUtil zoomTokenUtil;
 
     private final RestTemplate restTemplate;
 
-    public ZoomSessionGateway(RestTemplate restTemplate) {
+    public ZoomSessionGateway(ZoomTokenUtil zoomTokenUtil, RestTemplate restTemplate) {
+        this.zoomTokenUtil = zoomTokenUtil;
         this.restTemplate = restTemplate;
     }
 
@@ -66,17 +63,10 @@ public class ZoomSessionGateway {
 
     private HttpEntity<Object> buildEntity(Object body) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(generateJwt());
+        headers.setBearerAuth(zoomTokenUtil.generateVideoSdkJwt("zoom-test"));
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new HttpEntity<>(body, headers);
     }
 
-    private String generateJwt()
-    {
-        long nowMillis = System.currentTimeMillis();
-        long expMillis = nowMillis + 360000; // 1 hour
 
-        return Jwts.builder().issuer(key).issuedAt(new Date(nowMillis)).expiration(new Date(expMillis)).signWith(SignatureAlgorithm.HS256, secret.getBytes()).compact();
-
-    }
 }
