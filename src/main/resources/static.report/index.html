@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Sessions List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2D8CFF;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .session-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .session-title {
+            color: #2D8CFF;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .session-info {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .session-time {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .join-button {
+            background-color: #2D8CFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.2s ease;
+        }
+
+        .join-button:hover {
+            background-color: #2574db;
+        }
+
+        @media (max-width: 600px) {
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Zoom Sessions</h1>
+    <div class="sessions-grid" id="sessionsContainer">
+        <!-- Sessions will be populated here via JavaScript -->
+    </div>
+</div>
+
+<script>
+    // Sample data - Replace this with your actual data fetching logic
+    const zoomSessions = [
+        {
+            id: 1,
+            title: "Team Weekly Stand-up",
+            host: "John Doe",
+            datetime: "2025-08-04T10:00:00",
+            duration: "60",
+            meetingId: "123 456 7890"
+        },
+        {
+            id: 2,
+            title: "Project Review Meeting",
+            host: "Jane Smith",
+            datetime: "2025-08-04T14:30:00",
+            duration: "45",
+            meetingId: "987 654 3210"
+        }
+        // Add more sessions as needed
+    ];
+
+    function formatDate(dateString) {
+        return new Date(dateString).toLocaleString();
+    }
+
+    function renderSessions() {
+        const container = document.getElementById('sessionsContainer');
+
+        zoomSessions.forEach(session => {
+            const sessionElement = document.createElement('div');
+            sessionElement.className = 'session-card';
+            sessionElement.innerHTML = `
+                    <h2 class="session-title">${session.title}</h2>
+                    <p class="session-info">Host: ${session.host}</p>
+                    <p class="session-info">Meeting ID: ${session.meetingId}</p>
+                    <p class="session-time">${formatDate(session.datetime)}</p>
+                    <p class="session-info">Duration: ${session.duration} minutes</p>
+                    <button class="join-button" onclick="joinMeeting('${session.meetingId}')">
+                        Join Meeting
+                    </button>
+                `;
+            container.appendChild(sessionElement);
+        });
+    }
+
+    function joinMeeting(meetingId) {
+        // Implement your Zoom meeting join logic here
+        console.log(`Joining meeting: ${meetingId}`);
+    }
+
+    // Render sessions when the page loads
+    document.addEventListener('DOMContentLoaded', renderSessions);
+</script>
+</body>
+</html>
